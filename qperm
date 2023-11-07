@@ -1,0 +1,39 @@
+def quick_permutation(a):
+    n = len(a)
+    p = [0] * n
+    result = [a[:]]
+
+    i = 0
+    while i < n:
+        if p[i] < i:
+            if i % 2 == 0:
+                a[0], a[i] = a[i], a[0]
+            else:
+                a[p[i]], a[i] = a[i], a[p[i]]
+            result.append(a[:])
+            p[i] += 1
+            i = 0
+        else:
+            p[i] = 0
+            i += 1
+
+    return result
+
+# Function to process a set of lists from a file and generate permutations for each list
+def process_lists_from_file(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    all_permutations = []
+    for line in lines:
+        elements = line.strip().split()  # Assuming elements are separated by spaces
+        permutations = quick_permutation(elements)
+        all_permutations.append(permutations)
+
+    return all_permutations
+
+# Example usage to process lists from 'combies_modified.txt'
+file_path = 'combies_modified.txt'
+permutations_sets = process_lists_from_file(file_path)
+
+# Now, permutations_sets contains a list of permutations for each set of elements in the file
